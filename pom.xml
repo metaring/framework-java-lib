@@ -18,7 +18,7 @@
 
     <groupId>com.metaring</groupId>
     <artifactId>framework-java-lib</artifactId>
-    <version>1.0.8-SNAPSHOT</version>
+    <version>1.0.8</version>
 
     <name>MetaRing Framework Libraries</name>
     <description>Basic utilities for applications based on the MetaRing Framework</description>
@@ -42,7 +42,7 @@
     <scm>
         <url>https://github.com/metaring/framework-java-lib.git</url>
         <developerConnection>scm:git:git@github.com:metaring/framework-java-lib.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>v1.0.8</tag>
     </scm>
 
     <dependencies>
