@@ -30,7 +30,6 @@ import com.metaring.framework.util.log.LogMessageTypeProvider;
 import com.metaring.framework.util.log.LoggerFactory;
 
 public class Tools {
-
     private static final Function<String, Stream<String>> FROM_JSON_TO_STRINGS_FUNCTION = DataRepresentationImpl::getStrings;
 
     public static final EmailFactory FACTORY_EMAIL = new EmailFactoryImpl();
