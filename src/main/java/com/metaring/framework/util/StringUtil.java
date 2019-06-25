@@ -65,8 +65,7 @@ public class StringUtil {
                         stringBuilder.append("_");
                         digit = true;
                     }
-                }
-                else {
+                } else {
                     digit = false;
                     if (Character.isUpperCase(c)) {
                         stringBuilder.append("_");
@@ -100,8 +99,7 @@ public class StringUtil {
             if (first) {
                 first = false;
                 token = StringUtil.firstLetterToLowerCase(token);
-            }
-            else {
+            } else {
                 token = StringUtil.firstLetterToUpperCase(token);
             }
             stringBuilder.append(token);
@@ -118,8 +116,7 @@ public class StringUtil {
             baos.flush();
             printWriter.close();
             baos.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
         }
         String errorMessage = "\n" + new String(baos.toByteArray()).trim();
         return errorMessage;
