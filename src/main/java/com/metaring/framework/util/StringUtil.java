@@ -50,10 +50,10 @@ public class StringUtil {
 
     public static String toStaticCase(String aString) {
         if (aString == null) {
-           return null;
+            return null;
         }
         if (aString.isEmpty()) {
-        return "";
+            return "";
         }
         StringBuilder stringBuilder = new StringBuilder();
         boolean digit = false;
@@ -65,7 +65,8 @@ public class StringUtil {
                         stringBuilder.append("_");
                         digit = true;
                     }
-                } else {
+                }
+                else {
                     digit = false;
                     if (Character.isUpperCase(c)) {
                         stringBuilder.append("_");
@@ -99,11 +100,12 @@ public class StringUtil {
             if (first) {
                 first = false;
                 token = StringUtil.firstLetterToLowerCase(token);
-            } else {
+            }
+            else {
                 token = StringUtil.firstLetterToUpperCase(token);
             }
             stringBuilder.append(token);
-            }
+        }
         return stringBuilder.toString();
     }
 
@@ -116,7 +118,8 @@ public class StringUtil {
             baos.flush();
             printWriter.close();
             baos.close();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
         }
         String errorMessage = "\n" + new String(baos.toByteArray()).trim();
         return errorMessage;
@@ -127,13 +130,9 @@ public class StringUtil {
     }
 
     public static final boolean isNullOrEmpty(Object o) {
-        if (o == null) {
+        if(o == null) {
             return true;
-            }
+        }
         return isNullOrEmpty(o.toString());
-    }
-
-    public static final boolean isNullOrEmptyJson(String json) {
-        return isNullOrEmpty(json) || json.equals("null");
     }
 }
