@@ -19,35 +19,45 @@ package com.metaring.framework.util;
 import java.util.Collection;
 import java.util.Map;
 
-import com.metaring.framework.util.StringUtil;
+import com.metaring.framework.type.DataRepresentation;
 
 public class ObjectUtil {
 
-	public static final boolean isNullOrCollection(Object o) {
-		if (o == null) {
-			return true;
-		}
-		if (o instanceof Collection<?>) {
-			Collection<?> collection = (Collection<?>) o;
-			if (collection.size() == 0) {
-				return true;
-			}
-		}
+    public static final boolean isNullOrCollection(Object o) {
+        if (o == null) {
+            return true;
+        }
+        if (o instanceof Collection<?>) {
+            Collection<?> collection = (Collection<?>) o;
+            if (collection.size() == 0) {
+                return true;
+            }
+        }
 
-		return StringUtil.isNullOrEmpty(o);
-	}
+        return false;
+    }
 
-	public static final boolean isNullOrMap(Object o) {
-		if (o == null) {
-			return true;
-		}
-		if (o instanceof Map<?, ?>) {
-			Map<?, ?> map = (Map<?, ?>) o;
-			if (map.size() == 0) {
-				return true;
-			}
-		}
+    public static final boolean isNullOrMap(Object o) {
+        if (o == null) {
+            return true;
+            }
+        if (o instanceof Map<?, ?>) {
+            Map<?, ?> map = (Map<?, ?>) o;
+            if (map.size() == 0) {
+                return true;
+            }
+        }
 
-		return StringUtil.isNullOrEmpty(o);
-	}
+        return false;
+    }
+
+public static final boolean dataRepresentationIsNullOrEmpty(DataRepresentation input) {
+    if (input == null || input.isNull()) {
+            return true;
+        }
+        if (input.getProperties().size() == 0 && input.length() == 0) {
+            return true;
+        }
+        return false;
+    }
 }
