@@ -23,7 +23,7 @@ import com.metaring.framework.type.DataRepresentation;
 
 public class ObjectUtil {
 
-    public static final boolean isNullOrCollection(Object o) {
+    public static final boolean collectionIsNullOrEmpty(Collection<?> o) {
         if (o == null) {
             return true;
         }
@@ -37,10 +37,10 @@ public class ObjectUtil {
         return false;
     }
 
-    public static final boolean isNullOrMap(Object o) {
+    public static final boolean mapIsNullOrEmpty(Map<?, ?> o) {
         if (o == null) {
             return true;
-            }
+        }
         if (o instanceof Map<?, ?>) {
             Map<?, ?> map = (Map<?, ?>) o;
             if (map.size() == 0) {
@@ -51,8 +51,8 @@ public class ObjectUtil {
         return false;
     }
 
-public static final boolean dataRepresentationIsNullOrEmpty(DataRepresentation input) {
-    if (input == null || input.isNull()) {
+    public static final boolean dataRepresentationIsNullOrEmpty(DataRepresentation input) {
+        if (input == null || input.isNull()) {
             return true;
         }
         if (input.getProperties().size() == 0 && input.length() == 0) {
