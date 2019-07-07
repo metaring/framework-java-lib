@@ -16,48 +16,28 @@
 
 package com.metaring.framework.util;
 
-import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
+
+import org.apache.calcite.linq4j.Linq4j;
 
 import com.metaring.framework.type.DataRepresentation;
 
-public class ObjectUtil {
+public final class ObjectUtil {
 
-    public static final boolean collectionIsNullOrEmpty(Collection<?> o) {
-        if (o == null) {
-            return true;
-        }
-        if (o instanceof Collection<?>) {
-            Collection<?> collection = (Collection<?>) o;
-            if (collection.size() == 0) {
-                return true;
-            }
-        }
-
-        return false;
+    public static final <T> boolean isNullOrEmpty(T[] input) {
+        return Objects.isNull(input) || input.length == 0;
     }
 
-    public static final boolean mapIsNullOrEmpty(Map<?, ?> o) {
-        if (o == null) {
-            return true;
-        }
-        if (o instanceof Map<?, ?>) {
-            Map<?, ?> map = (Map<?, ?>) o;
-            if (map.size() == 0) {
-                return true;
-            }
-        }
-
-        return false;
+    public static final boolean isNullOrEmpty(Iterable<?> input) {
+        return Objects.isNull(input) || Linq4j.asEnumerable(input).count() == 0;
     }
 
-    public static final boolean dataRepresentationIsNullOrEmpty(DataRepresentation input) {
-        if (input == null || input.isNull()) {
-            return true;
-        }
-        if (input.getProperties().size() == 0 && input.length() == 0) {
-            return true;
-        }
-        return false;
+    public static final boolean isNullOrEmpty(Map<?, ?> input) {
+        return Objects.isNull(input) || input.isEmpty();
+    }
+
+    public static final boolean isNullOrEmpty(DataRepresentation input) {
+        return Objects.isNull(input) || input.isNullOrEmpty();
     }
 }
