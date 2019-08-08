@@ -25,6 +25,7 @@ import org.springframework.core.io.Resource;
 
 import com.metaring.framework.type.DataRepresentation;
 import com.metaring.framework.type.series.TextSeries;
+import com.metaring.framework.util.ObjectUtil;
 
 public class Core {
 
@@ -61,7 +62,13 @@ public class Core {
 
     private static final SysKB getSystemKB() {
         DataRepresentation configuration = load(Resources.GLOBAL_SYSKB_FILE_NAME);
-        if(configuration == null || configuration.isNull() || !configuration.hasProperties()) {
+        if(ObjectUtil.isNullOrEmpty(configuration)) {
+            try {
+                configuration = Tools.FACTORY_SYSKB.load(Core.class.getClassLoader().getResource(Resources.GLOBAL_SYSKB_FILE_NAME).toString());
+            } catch(Exception e) {
+            }
+        }
+        if(ObjectUtil.isNullOrEmpty(configuration)) {
             throw new IllegalAccessError("Invalid System Main Configuration file location.");
         }
         return Tools.FACTORY_SYSKB.create(load(Resources.DEFAULT_SYSKB_FILE_NAME).merge(configuration, load(Resources.LOCAL_SYSKB_FILE_NAME)));
