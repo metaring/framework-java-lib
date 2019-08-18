@@ -16,20 +16,32 @@
 
 package com.metaring.framework.controller;
 
+import com.metaring.framework.Core;
 import com.metaring.framework.SysKB;
 import com.metaring.framework.util.StringUtil;
 import com.metaring.framework.util.log.Logger;
 
 public abstract class AbstractBaseController extends ToolsAccessor {
-    private SysKB sysKB;
+
     private Logger logger;
     private boolean javaTest;
 
-    public AbstractBaseController(SysKB sysKB, Logger logger, Boolean test) {
-        this.sysKB = sysKB;
+    public AbstractBaseController(Logger logger, Boolean test) {
         this.logger = logger;
         this.setLoggerStackPosition();
         this.setTest(test);
+    }
+
+    public AbstractBaseController(SysKB sysKB, Logger logger) {
+        this(logger, Core.SYSKB.isSystemInTestMode());
+    }
+
+    public AbstractBaseController(Boolean test) {
+        this(Core.SYSKB.getSystemLogger(), test);
+    }
+
+    public AbstractBaseController() {
+        this(Core.SYSKB.getSystemLogger(), Core.SYSKB.isSystemInTestMode());
     }
 
     protected void setLoggerStackPosition() {
@@ -39,28 +51,12 @@ public abstract class AbstractBaseController extends ToolsAccessor {
         this.logger.setActualStackPosition(newStackPosition);
     }
 
-    public AbstractBaseController(SysKB sysKB) {
-        this(sysKB, sysKB.createSystemLogger(), sysKB.isSystemInTestMode());
-    }
-
-    public AbstractBaseController(SysKB sysKB, Logger logger) {
-        this(sysKB, logger, sysKB.isSystemInTestMode());
-    }
-
-    public AbstractBaseController(SysKB sysKB, Boolean test) {
-        this(sysKB, sysKB.getSystemLogger(), test);
-    }
-
     public Boolean getTest() {
         return this.javaTest ? true : false;
     }
 
     public void setTest(Boolean test) {
         this.javaTest = test == true;
-    }
-
-    public final SysKB getSysKB() {
-        return this.sysKB;
     }
 
     public Logger getLogger() {

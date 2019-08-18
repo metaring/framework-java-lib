@@ -155,7 +155,7 @@ public abstract class ToolsAccessor {
         return Tools.FACTORY_LOGGER.create(logName, messageType, depth);
     }
 
-    protected static final DataRepresentation dataRepresentationfromObject(Object object) {
+    protected static final DataRepresentation dataRepresentationFromObject(Object object) {
         return Tools.FACTORY_DATA_REPRESENTATION.fromObject(object);
     }
 
