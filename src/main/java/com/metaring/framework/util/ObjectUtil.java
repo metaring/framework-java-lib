@@ -16,9 +16,11 @@
 
 package com.metaring.framework.util;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
+import java.util.function.Function;
 
 import org.apache.calcite.linq4j.Linq4j;
 
@@ -42,25 +44,60 @@ public final class ObjectUtil {
         return Objects.isNull(input) || input.isNullOrEmpty();
     }
 
-
-    public static final Properties toProperties(final DataRepresentation rep) {
-        return toProperties(rep, null, null);
+    public static final Map<String, Object> toMap(final DataRepresentation rep) {
+        return toMap(rep, false);
     }
 
-    private static final Properties toProperties(final DataRepresentation initialData, Properties properties, String current) {
-        properties = properties == null ? new Properties() : properties;
+    public static final Map<String, Object> toMap(final DataRepresentation rep, boolean preserveNativeType) {
+        return toMap(rep, null, null, preserveNativeType ? DataRepresentationUtil::toNative : DataRepresentationUtil::toText);
+    }
+
+    private static final Map<String, Object> toMap(final DataRepresentation initialData, Map<String, Object> map, String current, Function<DataRepresentation, Object> transformer) {
+        map = map == null ? new HashMap<>() : map;
         if(ObjectUtil.isNullOrEmpty(initialData)) {
-            return properties;
+            return map;
         }
-        for (String currentProperty : initialData.getProperties()) {
-            String propertyName = String.join(StringUtil.isNullOrEmpty(current) ? "" : ".", StringUtil.isNullOrEmpty(current) ? "" : current, currentProperty);
-            DataRepresentation dataRepresentation = initialData.get(currentProperty);
-            if (dataRepresentation.hasProperties()) {
-                toProperties(dataRepresentation, properties, propertyName);
-            } else {
-                properties.put(propertyName, initialData.getText(currentProperty));
+        if(!StringUtil.isNullOrEmpty(current)) {
+            map.put(current, transformer.apply(initialData));
+        }
+        if(initialData.hasProperties()) {
+            for (String currentProperty : initialData.getProperties()) {
+                String propertyName = String.join(StringUtil.isNullOrEmpty(current) ? "" : ".", StringUtil.isNullOrEmpty(current) ? "" : current, currentProperty);
+                toMap(initialData.get(currentProperty), map, propertyName, transformer);
             }
         }
+        if(initialData.hasLength()) {
+            int i = 0;
+            for (DataRepresentation item : initialData) {
+                String propertyName = String.join(StringUtil.isNullOrEmpty(current) ? "" : ".", StringUtil.isNullOrEmpty(current) ? "" : current, ("." + i++));
+                toMap(item, map, propertyName, transformer);
+            }
+        }
+        return map;
+    }
+
+    public static final <K, V> Properties toProperties(Map<K, V> map) {
+        if(map == null || map.isEmpty()) {
+            return new Properties();
+        }
+        Properties properties = new Properties();
+        for(K key : map.keySet()) {
+            properties.put(key, map.get(key));
+        }
         return properties;
+    }
+
+    public static final Properties toProperties(DataRepresentation dataRep) {
+        if(isNullOrEmpty(dataRep)) {
+            return new Properties();
+        }
+        return toProperties(toMap(dataRep));
+    }
+
+    public static final Properties toProperties(DataRepresentation dataRep, boolean preserveNativeType) {
+        if(isNullOrEmpty(dataRep)) {
+            return new Properties();
+        }
+        return toProperties(toMap(dataRep, preserveNativeType));
     }
 }
