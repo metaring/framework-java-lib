@@ -53,8 +53,8 @@ public final class ObjectUtil {
     }
 
     private static final Map<String, Object> toMap(final DataRepresentation initialData, Map<String, Object> map, String current, Function<DataRepresentation, Object> transformer) {
-        map = map == null ? new HashMap<>() : map;
-        if(ObjectUtil.isNullOrEmpty(initialData)) {
+        map = isNullOrEmpty(map) ? new HashMap<>() : map;
+        if(isNullOrEmpty(initialData)) {
             return map;
         }
         if(!StringUtil.isNullOrEmpty(current)) {
@@ -76,12 +76,12 @@ public final class ObjectUtil {
         return map;
     }
 
-    public static final <K, V> Properties toProperties(Map<K, V> map) {
-        if(map == null || map.isEmpty()) {
+    public static final Properties toProperties(Map<?, ?> map) {
+        if(isNullOrEmpty(map)) {
             return new Properties();
         }
         Properties properties = new Properties();
-        for(K key : map.keySet()) {
+        for(Object key : map.keySet()) {
             properties.put(key, map.get(key));
         }
         return properties;
