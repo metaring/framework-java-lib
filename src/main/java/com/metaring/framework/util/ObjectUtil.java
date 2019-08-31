@@ -63,14 +63,14 @@ public final class ObjectUtil {
         if(initialData.hasProperties()) {
             for (String currentProperty : initialData.getProperties()) {
                 String propertyName = String.join(StringUtil.isNullOrEmpty(current) ? "" : ".", StringUtil.isNullOrEmpty(current) ? "" : current, currentProperty);
-                toMap(initialData.get(currentProperty), map, propertyName, transformer);
+                map = toMap(initialData.get(currentProperty), map, propertyName, transformer);
             }
         }
         if(initialData.hasLength()) {
             int i = 0;
             for (DataRepresentation item : initialData) {
                 String propertyName = String.join(StringUtil.isNullOrEmpty(current) ? "" : ".", StringUtil.isNullOrEmpty(current) ? "" : current, ("." + i++));
-                toMap(item, map, propertyName, transformer);
+                map = toMap(item, map, propertyName, transformer);
             }
         }
         return map;
