@@ -18,7 +18,7 @@
 
     <groupId>com.metaring</groupId>
     <artifactId>framework-java-lib</artifactId>
-    <version>1.5.3-SNAPSHOT</version>
+    <version>1.5.4-SNAPSHOT</version>
 
     <name>MetaRing Framework Libraries</name>
     <description>Basic utilities for applications based on the MetaRing Framework</description>
@@ -49,7 +49,7 @@
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>framework-java-impl</artifactId>
-            <version>1.5.2</version>
+            <version>1.5.3</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
