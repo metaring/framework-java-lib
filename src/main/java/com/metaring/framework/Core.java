@@ -69,7 +69,15 @@ public class Core {
             }
         }
         if(ObjectUtil.isNullOrEmpty(configuration)) {
-            configuration = Tools.FACTORY_DATA_REPRESENTATION.create();
+            String systemName = null;
+            try {
+                systemName = System.getProperty("sun.java.command");
+                systemName = systemName.substring(systemName.contains(" ") ? systemName.indexOf(" ") : systemName.length());
+                systemName = systemName.substring(systemName.contains(".") ? systemName.lastIndexOf(".") : systemName.length());
+            } catch(Exception e) {
+                systemName = "MetaRing";
+            }
+            configuration = Tools.FACTORY_DATA_REPRESENTATION.create().add("system", Tools.FACTORY_DATA_REPRESENTATION.create().add("name", systemName).add("executionEnvironment", Tools.PROVIDER_EXECUTION_ENVIRONMENT.DEVELOPMENT().getName()));
         }
         return Tools.FACTORY_SYSKB.create(load(Resources.DEFAULT_SYSKB_FILE_NAME).merge(configuration, load(Resources.LOCAL_SYSKB_FILE_NAME)));
     }
